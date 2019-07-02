@@ -3,9 +3,9 @@
 0.1, 2019-07-02
 
 ```
-mgrep [\| -Q \||\| -X \|] [ GREP_OPTION .\|.\|.] PATTERN [ FILE .\|.\|.]
-mgrep [\| -Q \||\| -X \|] [ GREP_OPTION .\|.\|.] -e PATTERNS .\|.\|. [ FILE .\|.\|.]
-mgrep [\| -Q \||\| -X \|] [ GREP_OPTION .\|.\|.] -f PATTERN_FILE .\|.\|. [ FILE .\|.\|.]
+mgrep [-Q|-X] [ GREP_OPTION ...] PATTERN [ FILE ...]
+mgrep [-Q|-X] [ GREP_OPTION ...] -e PATTERNS ... [ FILE ...]
+mgrep [-Q|-X] [ GREP_OPTION ...] -f PATTERN_FILE ... [ FILE ...]
 ```
 
 # Description
@@ -40,15 +40,15 @@ as well as attachments and fed the decoded content of those
 # Options
 
 
-* **-h&nbsp;***,&nbsp;--help*  
+* **-h&nbsp;**,&nbsp;**--help**
   Displays this help (as well as the help of original
   *grep*)
   and exit.
-* **-Q&nbsp;***\fr,&nbsp;\fb--quoted-printable*  
+* **-Q&nbsp;**,&nbsp;**--quoted-printable**
   Assume
-  *quoted-printablei*
+  *quoted-printable*
   encoding.
-* **-X&nbsp;***\fr,&nbsp;\fb--base64*  
+* **-X&nbsp;**,&nbsp;**--base64**
   Assume
   *base64*
   encoding (default).
@@ -60,11 +60,11 @@ as well as attachments and fed the decoded content of those
 # Standards
 
 
-## RFC\ 2045
+## RFC 2045
 
 Multipurpose Internet Mail Extensions, (**MIME**) Part One: Format of Internet Message Bodies
 
-## RFC\ 4155
+## RFC 4155
 
 The **application/mbox** Media Type
 
@@ -75,7 +75,3 @@ The **application/mbox** Media Type
 -- mainly the
 **MIME**
 decoding part.
-
-# Author
-
-Werner Fink &lt;[werner@suse.de](mailto:werner@suse.de)&gt;
