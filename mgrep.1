@@ -1,0 +1,84 @@
+.TH MGREP 1 "2019-07-02" "0.1" "User Commands"
+.SH NAME
+mgrep \- print lines that match patterns in mime\-encoded files
+.SH SYNOPSIS
+.B mgrep
+.RB [\| \-Q \||\| \-X \|]\&
+.RI [ GREP_OPTION .\|.\|.]\&
+.I PATTERN
+.RI [ FILE .\|.\|.]
+.br
+.B mgrep
+.RB [\| \-Q \||\| \-X \|]\&
+.RI [ GREP_OPTION .\|.\|.]\&
+.B \-e
+.I PATTERNS
+\&.\|.\|.\&
+.RI [ FILE .\|.\|.]
+.br
+.B mgrep
+.RB [\| \-Q \||\| \-X \|]\&
+.RI [ GREP_OPTION .\|.\|.]\&
+.B \-f
+.I PATTERN_FILE
+\&.\|.\|.\&
+.RI [ FILE .\|.\|.]
+.SH DESCRIPTION
+.IR  Mgrep
+ican be used to invoke the
+.I grep
+command on the
+.B decoded
+content of
+.I BASE64
+or
+.I quoted\-printable
+mime\-encoded files. Beside the options
+.B \-Q
+and
+.B \-X
+all options specified are passed directly to
+.I grep.
+If no file is specified, then the standard input is mime\-decoded
+and fed to grep.
+Otherwise the given files are mime\-decoded and fed to
+.IR grep .
+.PP
+As experimental feature: if the input files is in mbox format 
+.B mgrep
+may detect the boundaries used for the mime encoded messages
+as well as attachments and fed the decoded content of those
+(but not the header) to 
+.IR grep .
+.SH OPTIONS
+.TP
+.BI \-h\  \fR,\ \fB\-\-help
+Displays this help (as well as the help of original
+.IR grep )
+and exit.
+.TP
+.BI \-Q\  \fr,\ \fb\-\-quoted\-printable
+Assume
+.I quoted-printablei
+encoding.
+.TP
+.BI \-X\  \fr,\ \fb\-\-base64
+Assume
+.I base64
+encoding (default).
+.SH "SEE ALSO"
+.BR grep (1)
+.SH STANDARDS
+.SS RFC\ 2045
+Multipurpose Internet Mail Extensions, (\fBMIME\fR) Part One: Format of Internet Message Bodies
+.SS RFC\ 4155
+The \fBapplication/mbox\fR Media Type
+.SH LICENSES
+.I GNU GPL v2
+.br
+.I MIT
+\-\- mainly the
+.B MIME
+decoding part.
+.SH AUTHOR
+Werner Fink <werner@suse.de>
