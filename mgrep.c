@@ -35,6 +35,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "config.h"
 
 typedef enum _boolean {false, true} boolean;
 
@@ -224,6 +225,7 @@ static struct option long_options[] =
 {
     {"quoted-printable",	0, (int*)0, 'Q'},
     {"base64",			0, (int*)0, 'X'},
+    {"version",                 0, (int*)0, 'V'},
     {"help",			0, (int*)0, 'h'},
 
     /* Options with arguments used by grep */
@@ -296,6 +298,15 @@ main(int argc, char **argv)
 		    "\n"
 		    );
 	    pipecmd_arg(grep, "--help");
+	    p = pipeline_new();
+	    pipeline_command(p, grep);
+	    pipeline_start(p);
+	    c = pipeline_wait(p);
+	    pipeline_free(p);
+	    return c;
+	case 'V':
+	    fprintf(stdout, "mimegrep %s using:\n", VERSION);
+	    pipecmd_arg(grep, "--version");
 	    p = pipeline_new();
 	    pipeline_command(p, grep);
 	    pipeline_start(p);

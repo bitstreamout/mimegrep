@@ -1,4 +1,4 @@
-.TH MGREP 1 "2019-07-02" "0.1" "User Commands"
+.TH MGREP 1 "@date@" "@VERSION@" "User Commands"
 .SH NAME
 mgrep \- print lines that match patterns in mime\-encoded files
 .SH SYNOPSIS

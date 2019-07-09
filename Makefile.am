@@ -26,7 +26,15 @@ mgrep: $(OBJS)
 	$(CC) $(AM_CFLAGS) -o $@ $^ $(LIBS)
 
 clean-local:
-	$(RM) $^ $(OBJS) mgrep
+	$(RM) $(OBJS) mgrep
+
+distclean-local:
+	$(RM) mgrep.1
+
+maintainer-clean-local: distclean
+	$(RM) Makefile.in aclocal.m4 compile config.h.in config.h.in~ configure install-sh missing
+	$(RM) -r autom4te.cache/
+
 
 install-exec-local: mgrep
 	$(mkinstalldirs) $(DESTDIR)$(bindir)
@@ -35,3 +43,9 @@ install-exec-local: mgrep
 install-data-local: mgrep.1
 	$(mkinstalldirs) $(DESTDIR)$(man1dir)
 	$(INSTALL) $(INSTALLDTA) $< $(DESTDIR)$(man1dir)
+
+git-tag:
+	git tag -s "v$(VERSION)" -m "mimegrep $(VERSION)"
+
+git-tar:
+	git archive --format=tar.xz --prefix=mimegrep-$(VERSION)/ "v$(VERSION)" > mimegrep-$(VERSION).tar.xz
