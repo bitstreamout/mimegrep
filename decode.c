@@ -47,11 +47,23 @@
 #include <string.h>
 
 /* decode64 is based on code of the libresolv of the glibc hence the copyright above */
+#if 0
 static const char base64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-static char state64;
+#endif
+static const char index64[128] = {
+    -1,-1,-1,-1,    -1,-1,-1,-1,    -1,-1,-1,-1,    -1,-1,-1,-1,
+    -1,-1,-1,-1,    -1,-1,-1,-1,    -1,-1,-1,-1,    -1,-1,-1,-1,
+    -1,-1,-1,-1,    -1,-1,-1,-1,    -1,-1,-1,62,    -1,-1,-1,63,
+    52,53,54,55,    56,57,58,59,    60,61,-1,-1,    -1,-1,-1,-1,
+    -1, 0, 1, 2,     3, 4, 5, 6,     7, 8, 9,10,    11,12,13,14,
+    15,16,17,18,    19,20,21,22,    23,24,25,-1,    -1,-1,-1,-1,
+    -1,26,27,28,    29,30,31,32,    33,34,35,36,    37,38,39,40,
+    41,42,43,44,    45,46,47,48,    49,50,51,-1,    -1,-1,-1,-1
+};
 unsigned char*
 decode64(char **src)
 {
+    static char state64;
     static unsigned char dest[5];
     static int i;
     int c;
@@ -66,29 +78,29 @@ decode64(char **src)
 	if (c == '=')
 	    break;
 
-	const char *p = strchr(base64, c);
-	if (p == 0)
-	    goto reset;
+	const int p = ((c<0||c>127)?-1:index64[c]);
+	if (p < 0 || isspace(c))
+	    continue;
 
 	switch (state64) {
 	case 0:
 	    i = 0;
 	    memset(dest, '\0', sizeof(dest));
-	    dest[i] = (p - base64) << 2;
+	    dest[i] = p << 2;
 	    state64 = 1;
 	    continue;
 	case 1:
-	    dest[i++] |= (p - base64) >> 4;
-	    dest[i]    = ((p - base64) & 0x0f) << 4;
+	    dest[i++] |= p >> 4;
+	    dest[i]    = (p & 0x0f) << 4;
 	    state64 = 2;
 	    continue;
 	case 2:
-	    dest[i++] |= (p - base64) >> 2;
-	    dest[i]    = ((p - base64) & 0x03) << 6;
+	    dest[i++] |= p >> 2;
+	    dest[i]    = (p & 0x03) << 6;
 	    state64 = 3;
 	    continue;
 	case 3:
-	    dest[i++] |= (p - base64);
+	    dest[i++] |= p;
 	    goto out;
 	default:
 	    goto reset;
@@ -115,6 +127,8 @@ decode64(char **src)
 		    goto reset;
 	    if (dest[i] != 0) 
 		goto reset;
+	    while(*(*src)++ != '\0')
+		; /* drain buffer */
 	}
     } else /* if (state64 != 0) */
 	goto reset;

@@ -1,9 +1,11 @@
+AUTOMAKE_OPTIONS = 1.9.6 foreign
+
 CC = gcc
 RM = rm -vf
 INSTALL = install
 
 AM_CFLAGS = @CFLAGS@ $(libpipeline_CFLAGS)
-AM_CFLAGS += -g3
+AM_CFLAGS += -g3 -Wall
 LIBS = $(libpipeline_LIBS)
 
 prefix = @prefix@

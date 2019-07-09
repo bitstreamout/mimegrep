@@ -1,6 +1,6 @@
-AC_INIT([mimegrep], [0.1], [werner@suse.de])
+AC_INIT([mimegrep], [0.2], [werner@suse.de])
 AC_PREREQ([2.69])
-AM_INIT_AUTOMAKE([-Wall])
+AM_INIT_AUTOMAKE([-Wportability])
 AC_GNU_SOURCE
 AC_PROG_CC
 AC_PROG_CPP
