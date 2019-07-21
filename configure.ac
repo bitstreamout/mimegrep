@@ -5,7 +5,7 @@ AC_GNU_SOURCE
 AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_GREP
-date=`date +'%Y-%m-%d'`
+date=`date -u -r ChangeLog +'%Y-%m-%d'`
 AC_SUBST([date])dnl
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile mgrep.1])
